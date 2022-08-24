@@ -9,15 +9,16 @@ import SwiftUI
 
 struct GreetingView: View {
     @Binding var active: Bool
+    @EnvironmentObject private var viewModel:PlayViewModel
     var body: some View {
 
         VStack(spacing: 20) {
             Spacer()
             VStack(spacing: 0) {
-                Text("CS:GO MAPS")
+                Text("Tic Tae Toe")
                     .font(.system(size: 60))
                     .fontWeight(.heavy)
-                    .foregroundColor(.yellow)
+                    .foregroundColor(.orange)
                 Text("""
                         "Do stupid stuff,
                         But do it with confidence"
@@ -25,10 +26,13 @@ struct GreetingView: View {
                         """)
                     .font(.subheadline)
                     .fontWeight(.light)
-                    .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 10)
             }
+            HStack {
+                Text("Name:")
+                TextField("Type your name", text: $viewModel.currentPlayer.name).padding(.horizontal).frame(height: 60).cornerRadius(50)
+            }.padding()
             Spacer()
             Button(action: {
                 // Click button lets roll will play theme music
@@ -40,8 +44,7 @@ struct GreetingView: View {
                         .frame(height: 80)
                         .overlay(Text("Lets roll")
                             .font(.system(.title3, design: .rounded))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white))
+                            .fontWeight(.bold))
                 })
         }
             

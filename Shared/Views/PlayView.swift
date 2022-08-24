@@ -22,15 +22,10 @@ struct PlayView: View {
 
                             // if no move ko x on that
                             GameSquareView(proxy: geometry)
-
-                            PlayerIndicator(systemImageName: viewModel.moves[i]?.indicator ?? "", viewModel: viewModel, i: i)
+                            PlayerIndicator(systemImageName: viewModel.moves[i]?.indicator ?? "")
+                        }.onTapGesture {
+                            viewModel.processPlayerMove(for: i)
                         }
-                        //            .simultaneousGesture(TapGesture().onEnded { _ in
-                        //                withAnimation(.easeIn(duration: 0.25)) {
-                        //                    self.degrees -= 180
-                        //                }
-                        //
-                        //            })
                     }
                 }
                 Spacer()
@@ -77,22 +72,30 @@ struct PlayView_Previews: PreviewProvider {
 
 struct PlayerIndicator: View {
     var systemImageName: String
-    var viewModel: PlayViewModel
-    var i: Int
-    @State var degrees = 0.0
+    @State private var degrees = 0.0
     var body: some View {
         ZStack {
+            
             Image(systemName: systemImageName)
                 .resizable()
                 .frame(width: 40, height: 40)
                 .foregroundColor(.white)
+
         }.rotation3DEffect(.degrees(degrees), axis: (x: 0, y: 1, z: 0))
-            .onTapGesture {
-            viewModel.processPlayerMove(for: i)
+            .onChange(of: systemImageName, perform: { newValue in
             withAnimation(.easeIn(duration: 0.25)) {
                 self.degrees -= 180
             }
-        }
+        })
+
+
+
+//            .animation(.easeIn(duration: 0.25), value: i) {
+//            degrees -= 180
+//        }
+//        withAnimation(.easeIn(duration: 0.25)) {
+//            degrees -= 180
+//        }
 
     }
 }

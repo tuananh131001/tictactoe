@@ -12,7 +12,7 @@ struct tictactoeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            InitalView()
+            InitalView().environmentObject(PlayViewModel())
         }
     }
 }

@@ -11,7 +11,7 @@ struct AllTabView: View {
     @State var selectedTab = 1
     var body: some View {
         TabView(selection: $selectedTab) {
-            TutorialView()
+            TutorialView(tabSelection: $selectedTab)
                 .tabItem {
                 VStack {
                     Image(systemName: "book.fill")
@@ -41,7 +41,7 @@ struct AllTabView: View {
             }.tag(4)
         }.onChange(of: selectedTab) { newValue in
 //            playSound(sound: "press", type: "mp3")
-        }.environmentObject(PlayViewModel())
+        }
     }
 }
 struct AllTabView_Previews: PreviewProvider {
