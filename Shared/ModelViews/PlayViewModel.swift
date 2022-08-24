@@ -20,25 +20,8 @@ final class PlayViewModel: ObservableObject {
     @Published var listPlayer: [String:Int] = UserDefaults.standard.object(forKey: "players") as? [String: Int] ?? [:]
     private var cancellable: AnyCancellable?
 
-    init(playersPublisher: AnyPublisher<[GamePlayer], Never> = PlayerStorage.shared.players.eraseToAnyPublisher()) {
-        cancellable = playersPublisher.sink { [unowned self] player in
-            NSLog("Updating courses")
-//            self.players = player
-        }
 
-//        currentPlayer = GamePlayerModel()
-//        currentPlayer?.id = UUID()
-//        currentPlayer?.name = "sir"
-//        currentPlayer?.score = 1000
 
-    }
-
-//    init(){
-//        currentPlayer = GamePlayerModel()
-//        currentPlayer?.id = UUID()
-//        currentPlayer?.name = "sir"
-//        currentPlayer?.score = 1000
-//    }
     func processPlayerMove(for position: Int) {
         if isSpareOccupied(in: moves, forIndex: position) { return }
         moves[position] = Move(player: .human, boardIndex: position)
@@ -132,12 +115,4 @@ final class PlayViewModel: ObservableObject {
     func resetGame() {
         moves = Array(repeating: nil, count: 9)
     }
-
-    //Players data
-    func deleteCourse(withId id: UUID) {
-        PlayerStorage.shared.delete(id: id)
-    }
-//    func addCourse() {
-//        PlayerStorage.shared.add(withId: currentPlayer?.id ?? UUID(), name: currentPlayer?.name ?? "sir", score: currentPlayer?.score ?? 0)
-//    }
 }
