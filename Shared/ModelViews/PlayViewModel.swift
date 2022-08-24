@@ -17,7 +17,7 @@ final class PlayViewModel: ObservableObject {
     @Published var isGameBoardDisabled = false
     @Published var alertItem: AlertItem?
     @Published var currentPlayer: GamePlayerModel = UserDefaults.standard.object(forKey: "currentPlayer") as? GamePlayerModel ?? GamePlayerModel(id: UUID(), name: "sir", score: 1000)
-    @Published var listPlayer: [String:Int] = UserDefaults.standard.object(forKey: "players") as? [String: Int] ?? [:]
+    @Published var listPlayer: [String: Int] = UserDefaults.standard.object(forKey: "players") as? [String: Int] ?? [:]
     private var cancellable: AnyCancellable?
 
 
@@ -25,15 +25,19 @@ final class PlayViewModel: ObservableObject {
     func processPlayerMove(for position: Int) {
         if isSpareOccupied(in: moves, forIndex: position) { return }
         moves[position] = Move(player: .human, boardIndex: position)
+        playSound(sound: "click", type: "mp3")
+
 //                            isHumansTurn.toggle()
         if checkWinCondition(for: .human, in: moves) {
             alertItem = AlertContext.humanWin
             currentPlayer.score += 200
+            playSound(sound: "victory", type: "mp3")
 //            addCourse()
             return
         }
         if checkForDraw(in: moves) {
             alertItem = AlertContext.draw
+            playSound(sound: "draw", type: "mp3")
             return
         }
         isGameBoardDisabled = true
@@ -45,6 +49,7 @@ final class PlayViewModel: ObservableObject {
             if checkWinCondition(for: .computer, in: moves) {
                 alertItem = AlertContext.computerWin
                 currentPlayer.score -= 200
+                playSound(sound: "lose", type: "mp3")
 
                 listPlayer[currentPlayer.name] = currentPlayer.score
                 UserDefaults.standard.set(listPlayer, forKey: "players")
@@ -52,6 +57,7 @@ final class PlayViewModel: ObservableObject {
             }
             if checkForDraw(in: moves) {
                 alertItem = AlertContext.draw
+                playSound(sound: "draw", type: "mp3")
                 return
             }
         }

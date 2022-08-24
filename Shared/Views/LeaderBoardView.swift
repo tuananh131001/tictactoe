@@ -19,7 +19,11 @@ struct LeaderBoardView: View {
                     } }
             }
 
-        }
+        }.onAppear(perform: {
+            playSound(sound: "wii", type: "mp3")
+        })
+            
+        
 
     }
 

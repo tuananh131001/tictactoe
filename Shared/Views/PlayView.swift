@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PlayView: View {
     @EnvironmentObject private var viewModel: PlayViewModel
+
     var body: some View {
 
         GeometryReader { geometry in
@@ -18,13 +19,18 @@ struct PlayView: View {
                 LazyVGrid(columns: viewModel.columns) {
                     ForEach(0..<9) { i in
                         ZStack {
-                            GameSquareView(proxy: geometry)
+
                             // if no move ko x on that
-                            PlayerIndicator(systemImageName: viewModel.moves[i]?.indicator ?? "")
+                            GameSquareView(proxy: geometry)
+
+                            PlayerIndicator(systemImageName: viewModel.moves[i]?.indicator ?? "", viewModel: viewModel, i: i)
                         }
-                            .onTapGesture {
-                            viewModel.processPlayerMove(for: i)
-                        }
+                        //            .simultaneousGesture(TapGesture().onEnded { _ in
+                        //                withAnimation(.easeIn(duration: 0.25)) {
+                        //                    self.degrees -= 180
+                        //                }
+                        //
+                        //            })
                     }
                 }
                 Spacer()
@@ -71,10 +77,22 @@ struct PlayView_Previews: PreviewProvider {
 
 struct PlayerIndicator: View {
     var systemImageName: String
+    var viewModel: PlayViewModel
+    var i: Int
+    @State var degrees = 0.0
     var body: some View {
-        Image(systemName: systemImageName)
-            .resizable()
-            .frame(width: 40, height: 40)
-            .foregroundColor(.white)
+        ZStack {
+            Image(systemName: systemImageName)
+                .resizable()
+                .frame(width: 40, height: 40)
+                .foregroundColor(.white)
+        }.rotation3DEffect(.degrees(degrees), axis: (x: 0, y: 1, z: 0))
+            .onTapGesture {
+            viewModel.processPlayerMove(for: i)
+            withAnimation(.easeIn(duration: 0.25)) {
+                self.degrees -= 180
+            }
+        }
+
     }
 }
