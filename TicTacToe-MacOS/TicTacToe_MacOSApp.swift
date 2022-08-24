@@ -11,7 +11,7 @@ import SwiftUI
 struct TicTacToe_MacOSApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            InitalView().environmentObject(PlayViewModel())
         }
     }
 }

@@ -34,7 +34,9 @@ struct TutorialView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.blue))
                 })
-        }.padding()
+        }.padding().onAppear(perform: {
+            playSound(sound: "tutorialmusic", type: "mp3")
+        })
     }
 }
 

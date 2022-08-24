@@ -29,6 +29,12 @@ struct PlayView: View {
                     }
                 }
                 Spacer()
+                Menu("Select mode: \(viewModel.mode)") {
+                    Button("Easy mode", action: easyMode)
+                    Button("Hard mode", action: hardMode)
+                    Button("Gacha mode", action: gachaMode)
+                }
+                Spacer()
                 Text("Current Score: \(viewModel.currentPlayer.score)")
                 Text("Player Name: \(viewModel.currentPlayer.name)")
             }.padding()
@@ -39,6 +45,15 @@ struct PlayView: View {
                     dismissButton: .default(alertItem.buttonTitle, action: { viewModel.resetGame() }))
             })
         }
+    }
+    func easyMode() {
+        viewModel.mode = "easy"
+    }
+    func hardMode() {
+        viewModel.mode = "hard"
+    }
+    func gachaMode() {
+        viewModel.mode = "gacha"
     }
 
 }
@@ -75,7 +90,7 @@ struct PlayerIndicator: View {
     @State private var degrees = 0.0
     var body: some View {
         ZStack {
-            
+
             Image(systemName: systemImageName)
                 .resizable()
                 .frame(width: 40, height: 40)
