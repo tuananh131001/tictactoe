@@ -18,7 +18,7 @@ struct AllTabView: View {
                     Text("Guide")
                 }
                 }.tag(1)
-            PlayView()
+            SelectView()
                 .tabItem {
                 VStack {
                     Image(systemName: "gamecontroller")

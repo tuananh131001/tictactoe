@@ -11,65 +11,115 @@ import Combine
 
 final class PlayViewModel: ObservableObject {
 
+
     let columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     // left to right 0 to 3
-    @Published var moves: [Move?] = Array(repeating: nil, count: 9)
-    @Published var mode = "easy"
+    @Published var mode = "multiplayer"
     @Published var isGameBoardDisabled = false
     @Published var alertItem: AlertItem?
     @Published var currentPlayer: GamePlayerModel = UserDefaults.standard.object(forKey: "currentPlayer") as? GamePlayerModel ?? GamePlayerModel(id: UUID(), name: "sir", score: 1000)
     @Published var listPlayer: [String: Int] = UserDefaults.standard.object(forKey: "players") as? [String: Int] ?? [:]
-    private var cancellable: AnyCancellable?
 
+    //Online
+    @Published var currentUser: User!
+    @AppStorage("user") private var userData: Data?
+    @Published var gameNotification = GameNotification.waitingForPlayer
+    @Published var game: Game? {
+        didSet {
+            if(mode == "multiplayer") {
+                checkIfGameIsOver()
+                //check the game status
+
+                if game == nil { updateGameNotificationFor(.finished) } else {
+                    game?.player2Id == "" ? updateGameNotificationFor(.waitingForPlayer) : updateGameNotificationFor(.started)
+                }
+            }
+        }
+    }
+    private var cancellables: Set<AnyCancellable> = []
+
+    init() {
+        if(mode == "multiplayer") {
+            retriveUser()
+            if currentUser == nil {
+                saveUser()
+            }
+        } else {
+            self.game = Game(id: UUID().uuidString, player1Id: UUID().uuidString, player2Id: "", blockMoveForPlayerId: UUID().uuidString, winningPlayerId: "", rematchPlayerId: [], moves: Array(repeating: nil, count: 9))
+        }
+    }
+    func getTheGame() {
+        FirebaseService.shared.startGame(with: currentUser.id)
+
+        FirebaseService.shared.$game
+            .assign(to: \.game, on: self)
+            .store(in: &cancellables)
+    }
     func processPlayerMove(for position: Int) {
         var gachaMovePosition = Int.random(in: 0..<9)
         if (mode == "gacha") {
-            // If AI can't take middle spare, take random spare
-            while isSpareOccupied(in: moves, forIndex: gachaMovePosition) {
+            while isSpareOccupied(in: game!.moves, forIndex: gachaMovePosition) {
                 gachaMovePosition = Int.random(in: 0..<9)
             }
-            moves[gachaMovePosition] = Move(player: .human, boardIndex: gachaMovePosition)
+            game!.moves[gachaMovePosition] = Move(player: .human, boardIndex: gachaMovePosition)
+        } else if (mode == "multiplayer") {
+            if isSpareOccupied(in: game!.moves, forIndex: position) { return }
+//            moves[position] = Move(player: .human, boardIndex: position)
+            game!.moves[position] = Move(player: isPlayerOne(), boardIndex: position)
+            game!.blockMoveForPlayerId = currentUser.id
+            FirebaseService.shared.updateGame(game!)
+
         } else {
-            if isSpareOccupied(in: moves, forIndex: position) { return }
-            moves[position] = Move(player: .human, boardIndex: position)
+            if isSpareOccupied(in: game!.moves, forIndex: position) { return }
+            game!.moves[position] = Move(player: .human, boardIndex: position)
         }
         // If AI can't take middle spare, take random spare
         playSound(sound: "click", type: "mp3")
-//                            isHumansTurn.toggle()
-        if checkWinCondition(for: .human, in: moves) {
-            alertItem = AlertContext.humanWin
-            currentPlayer.score += 200
-            playSound(sound: "victory", type: "mp3")
+        if checkWinCondition(for: .human, in: game!.moves) {
 
-//            addCourse()
-            return
-        }
-        if checkForDraw(in: moves) {
-            alertItem = AlertContext.draw
-            playSound(sound: "draw", type: "mp3")
-            return
-        }
-        isGameBoardDisabled = true
-        // check for win or draw
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
-            let computerPosition = computerMoveLocation(in: moves)
-            moves[computerPosition] = Move(player: .computer, boardIndex: computerPosition)
-            isGameBoardDisabled = false
-            if checkWinCondition(for: .computer, in: moves) {
-                alertItem = AlertContext.computerWin
-                currentPlayer.score -= 200
-                playSound(sound: "lose", type: "mp3")
-
-                
-                return
+            if(mode == "multiplayer") {
+                game!.winningPlayerId = currentUser.id
+                print("you have won!")
+                FirebaseService.shared.updateGame(game!)
+            } else {
+                alertItem = AlertContext.humanWin
+                currentPlayer.score += 200
             }
-            if checkForDraw(in: moves) {
+            playSound(sound: "victory", type: "mp3")
+            return
+        }
+        if (checkForDraw(in: game!.moves)) {
+            if(mode == "multiplayer") {
+                game!.winningPlayerId = "0"
+                print("Draw!")
+                FirebaseService.shared.updateGame(game!)
+            } else {
                 alertItem = AlertContext.draw
                 playSound(sound: "draw", type: "mp3")
-                return
+            }
+            return
+        }
+        if (mode != "multiplayer") {
+            isGameBoardDisabled = true
+            // check for win or draw
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
+                let computerPosition = computerMoveLocation(in: game!.moves)
+                game!.moves[computerPosition] = Move(player: .computer, boardIndex: computerPosition)
+                isGameBoardDisabled = false
+                if checkWinCondition(for: .computer, in: game!.moves) {
+                    alertItem = AlertContext.computerWin
+                    currentPlayer.score -= 200
+                    playSound(sound: "lose", type: "mp3")
+                    return
+                }
+                if checkForDraw(in: game!.moves) {
+                    alertItem = AlertContext.draw
+                    playSound(sound: "draw", type: "mp3")
+                    return
+                }
             }
         }
-        
+
     }
     // Check already exist
     func isSpareOccupied(in moves: [Move?], forIndex index: Int) -> Bool {
@@ -127,12 +177,79 @@ final class PlayViewModel: ObservableObject {
         }
         return false
     }
+    func updateGameNotificationFor(_ state: GameState) {
+
+        switch state {
+        case .started:
+            gameNotification = GameNotification.gameHasStarted
+        case .waitingForPlayer:
+            gameNotification = GameNotification.waitingForPlayer
+        case .finished:
+            gameNotification = GameNotification.gameFinished
+        }
+    }
+    func checkForGameBoardStatus() -> Bool {
+        return game != nil ? game!.blockMoveForPlayerId == currentUser.id: false
+    }
+
     func checkForDraw(in moves: [Move?]) -> Bool {
         return moves.compactMap { $0 }.count == 9
+    }
+    func quitGame() {
+        FirebaseService.shared.quitTheGame()
     }
     func resetGame() {
         listPlayer[currentPlayer.name] = currentPlayer.score
         UserDefaults.standard.set(listPlayer, forKey: "players")
-        moves = Array(repeating: nil, count: 9)
+        game!.moves = Array(repeating: nil, count: 9)
     }
+    //MARK: - User object
+    func saveUser() {
+        currentUser = User()
+        do {
+            print("encoding user object")
+            let data = try JSONEncoder().encode(currentUser)
+            userData = data
+        } catch {
+            print("couldnt same user object")
+        }
+
+    }
+    func retriveUser() {
+
+        guard let userData = userData else { return }
+
+        do {
+            print("decoding user")
+            currentUser = try JSONDecoder().decode(User.self, from: userData)
+        } catch {
+            print("no user saved")
+        }
+    }
+    func isPlayerOne() -> Player {
+        if(game != nil ? game!.player1Id == currentUser.id: false) {
+            return .human
+        } else {
+            return .computer
+        }
+
+    }
+    func checkIfGameIsOver() {
+        alertItem = nil
+
+        guard game != nil else { return }
+
+        if game!.winningPlayerId == "0" {
+            alertItem = AlertContext.draw
+
+        } else if game!.winningPlayerId != "" {
+
+            if game!.winningPlayerId == currentUser.id {
+                alertItem = AlertContext.humanWin
+            } else {
+                alertItem = AlertContext.computerWin
+            }
+        }
+    }
+
 }
