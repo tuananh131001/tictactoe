@@ -125,6 +125,7 @@ final class PlayViewModel: ObservableObject {
     func isSpareOccupied(in moves: [Move?], forIndex index: Int) -> Bool {
         return moves.contains(where: { $0?.boardIndex == index })
     }
+    // MARK - AI SECTION
     // If Ai can win then win
     // If AI cant win , then block
     // If AI cant block, then take middlespare
@@ -177,8 +178,8 @@ final class PlayViewModel: ObservableObject {
         }
         return false
     }
+    //MARK - END AI SECTION
     func updateGameNotificationFor(_ state: GameState) {
-
         switch state {
         case .started:
             gameNotification = GameNotification.gameHasStarted

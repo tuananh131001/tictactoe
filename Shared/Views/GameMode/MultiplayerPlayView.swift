@@ -17,6 +17,10 @@ struct MultiplayerPlayView: View {
             VStack {
                 Text(viewModel.gameNotification)
                 Spacer()
+                HStack {
+                    Text("My turn").foregroundColor(viewModel.game?.blockMoveForPlayerId != viewModel.currentUser.id ? .red : .primary)
+                    Text("Other turn").foregroundColor(viewModel.game?.blockMoveForPlayerId == viewModel.currentUser.id ? .red : .primary)
+                }
                 LazyVGrid(columns: viewModel.columns) {
                     ForEach(0..<9) { i in
                         ZStack {
