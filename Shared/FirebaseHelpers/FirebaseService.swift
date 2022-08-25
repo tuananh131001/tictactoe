@@ -28,7 +28,7 @@ final class FirebaseService: ObservableObject {
         FirebaseReference(.Game).whereField("player2Id", isEqualTo: "").whereField("player1Id", isNotEqualTo: userId).getDocuments { querySnapshot, error in
 
             if error != nil {
-                print("Error starting game", error?.localizedDescription)
+                print("Error starting game", error?.localizedDescription ?? "Uncatch error")
                 //create new game
                 self.createNewGame(with: userId)
                 return
@@ -59,7 +59,7 @@ final class FirebaseService: ObservableObject {
             print("changes received from firebase")
 
             if error != nil {
-                print("Error listening to changes", error?.localizedDescription)
+                print("Error listening to changes", error?.localizedDescription ?? "Uncatch error")
                 return
             }
 

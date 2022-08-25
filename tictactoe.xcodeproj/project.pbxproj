@@ -32,6 +32,10 @@
 		3D462CCC28B7B84400952845 /* PlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D462CCA28B7B84400952845 /* PlayView.swift */; };
 		3D462CCE28B7B86600952845 /* SelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D462CCD28B7B86600952845 /* SelectView.swift */; };
 		3D462CCF28B7B86600952845 /* SelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D462CCD28B7B86600952845 /* SelectView.swift */; };
+		3D462CD228B7D02F00952845 /* tutorialmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D462CD128B7D02F00952845 /* tutorialmusic.mp3 */; };
+		3D462CD328B7D02F00952845 /* tutorialmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D462CD128B7D02F00952845 /* tutorialmusic.mp3 */; };
+		3D462CD528B7D1B800952845 /* selectview.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D462CD428B7D1B700952845 /* selectview.mp3 */; };
+		3D462CD628B7D1B800952845 /* selectview.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D462CD428B7D1B700952845 /* selectview.mp3 */; };
 		3D4AA41B28A679170039C326 /* tictactoeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4AA41A28A679170039C326 /* tictactoeApp.swift */; };
 		3D4AA41D28A679170039C326 /* AllTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4AA41C28A679170039C326 /* AllTabView.swift */; };
 		3D4AA41F28A679180039C326 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D4AA41E28A679180039C326 /* Assets.xcassets */; };
@@ -63,8 +67,6 @@
 		3D7AB18D28B771AE00D47474 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7AB18B28B771AE00D47474 /* User.swift */; };
 		3D7AB18F28B780D800D47474 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7AB18E28B780D800D47474 /* Game.swift */; };
 		3D7AB19028B780D800D47474 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7AB18E28B780D800D47474 /* Game.swift */; };
-		3DA4C39A28B6608900158CD1 /* tutorialmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3DA4C39928B6608900158CD1 /* tutorialmusic.mp3 */; };
-		3DA4C39B28B6608900158CD1 /* tutorialmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3DA4C39928B6608900158CD1 /* tutorialmusic.mp3 */; };
 		3DA4C39C28B67B3300158CD1 /* LeaderBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4AA44928A67C4A0039C326 /* LeaderBoardView.swift */; };
 		3DBFDCE428B5E7FF0008ECDD /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBFDCE328B5E7FF0008ECDD /* PlaySound.swift */; };
 		3DBFDCE528B5E8020008ECDD /* PlaySound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBFDCE328B5E7FF0008ECDD /* PlaySound.swift */; };
@@ -97,6 +99,8 @@
 		3D462CC728B7A95700952845 /* GameNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNotification.swift; sourceTree = "<group>"; };
 		3D462CCA28B7B84400952845 /* PlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayView.swift; sourceTree = "<group>"; };
 		3D462CCD28B7B86600952845 /* SelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectView.swift; sourceTree = "<group>"; };
+		3D462CD128B7D02F00952845 /* tutorialmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tutorialmusic.mp3; sourceTree = "<group>"; };
+		3D462CD428B7D1B700952845 /* selectview.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = selectview.mp3; sourceTree = "<group>"; };
 		3D4AA41728A679170039C326 /* tictactoe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tictactoe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D4AA41A28A679170039C326 /* tictactoeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tictactoeApp.swift; sourceTree = "<group>"; };
 		3D4AA41C28A679170039C326 /* AllTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTabView.swift; sourceTree = "<group>"; };
@@ -114,7 +118,6 @@
 		3D7AB18828B7701300D47474 /* PlayerIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerIndicator.swift; sourceTree = "<group>"; };
 		3D7AB18B28B771AE00D47474 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3D7AB18E28B780D800D47474 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
-		3DA4C39928B6608900158CD1 /* tutorialmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tutorialmusic.mp3; sourceTree = "<group>"; };
 		3DBFDCE328B5E7FF0008ECDD /* PlaySound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySound.swift; sourceTree = "<group>"; };
 		3DBFDCE628B5E8820008ECDD /* lose.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lose.mp3; sourceTree = "<group>"; };
 		3DBFDCE928B5E9080008ECDD /* victory.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = victory.mp3; sourceTree = "<group>"; };
@@ -298,8 +301,9 @@
 			children = (
 				3DBFDCF228B5EB7C0008ECDD /* press.mp3 */,
 				3DBFDCEF28B5EA9A0008ECDD /* click.mp3 */,
-				3DA4C39928B6608900158CD1 /* tutorialmusic.mp3 */,
+				3D462CD128B7D02F00952845 /* tutorialmusic.mp3 */,
 				3DBFDCF528B5ED450008ECDD /* wii.mp3 */,
+				3D462CD428B7D1B700952845 /* selectview.mp3 */,
 				3DBFDCEC28B5EA2C0008ECDD /* draw.mp3 */,
 				3DBFDCE928B5E9080008ECDD /* victory.mp3 */,
 				3DBFDCE628B5E8820008ECDD /* lose.mp3 */,
@@ -414,10 +418,11 @@
 				3D7AB16D28B76AEE00D47474 /* GoogleService-Info.plist in Resources */,
 				3D14CEB428A7B09300A4F3F2 /* Assets.xcassets in Resources */,
 				3DBFDCF428B5EB7C0008ECDD /* press.mp3 in Resources */,
+				3D462CD328B7D02F00952845 /* tutorialmusic.mp3 in Resources */,
 				3DBFDCF128B5EA9A0008ECDD /* click.mp3 in Resources */,
 				3DBFDCEB28B5E9080008ECDD /* victory.mp3 in Resources */,
 				3DBFDCEE28B5EA2C0008ECDD /* draw.mp3 in Resources */,
-				3DA4C39B28B6608900158CD1 /* tutorialmusic.mp3 in Resources */,
+				3D462CD628B7D1B800952845 /* selectview.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,12 +432,13 @@
 			files = (
 				3D4AA42228A679180039C326 /* Preview Assets.xcassets in Resources */,
 				3DBFDCED28B5EA2C0008ECDD /* draw.mp3 in Resources */,
-				3DA4C39A28B6608900158CD1 /* tutorialmusic.mp3 in Resources */,
 				3DBFDCF328B5EB7C0008ECDD /* press.mp3 in Resources */,
 				3DBFDCEA28B5E9080008ECDD /* victory.mp3 in Resources */,
 				3DBFDCF028B5EA9A0008ECDD /* click.mp3 in Resources */,
 				3D4AA41F28A679180039C326 /* Assets.xcassets in Resources */,
+				3D462CD228B7D02F00952845 /* tutorialmusic.mp3 in Resources */,
 				3D7AB16C28B76AEE00D47474 /* GoogleService-Info.plist in Resources */,
+				3D462CD528B7D1B800952845 /* selectview.mp3 in Resources */,
 				3DBFDCF628B5ED450008ECDD /* wii.mp3 in Resources */,
 				3DBFDCE728B5E8820008ECDD /* lose.mp3 in Resources */,
 			);

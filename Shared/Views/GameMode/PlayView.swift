@@ -20,7 +20,7 @@ struct PlayView: View {
                     ForEach(0..<9) { i in
                         ZStack {
                             // if no move ko x on that
-                            GameSquareView(proxy: geometry)
+                            GameSquareView(isRed:true,proxy: geometry)
                             PlayerIndicator(systemImageName: viewModel.game?.moves[i]?.indicator ?? "")
                         }.onTapGesture {
                             viewModel.processPlayerMove(for: i)
@@ -44,7 +44,9 @@ struct PlayView: View {
                     dismissButton: .default(alertItem.buttonTitle, action: { viewModel.resetGame() }))
             })
         }.onAppear {
-            viewModel.mode = "singleplayer"
+//            viewModel.resetGame()
+            viewModel.resetGameObject()
+            viewModel.mode = "easy"
         }
     }
     func easyMode() {

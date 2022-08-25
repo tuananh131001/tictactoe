@@ -29,7 +29,6 @@ final class PlayViewModel: ObservableObject {
             if(mode == "multiplayer") {
                 checkIfGameIsOver()
                 //check the game status
-
                 if game == nil { updateGameNotificationFor(.finished) } else {
                     game?.player2Id == "" ? updateGameNotificationFor(.waitingForPlayer) : updateGameNotificationFor(.started)
                 }
@@ -39,13 +38,12 @@ final class PlayViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
 
     init() {
+
         if(mode == "multiplayer") {
             retriveUser()
             if currentUser == nil {
                 saveUser()
             }
-        } else {
-            self.game = Game(id: UUID().uuidString, player1Id: UUID().uuidString, player2Id: "", blockMoveForPlayerId: UUID().uuidString, winningPlayerId: "", rematchPlayerId: [], moves: Array(repeating: nil, count: 9))
         }
     }
     func getTheGame() {
@@ -64,7 +62,6 @@ final class PlayViewModel: ObservableObject {
             game!.moves[gachaMovePosition] = Move(player: .human, boardIndex: gachaMovePosition)
         } else if (mode == "multiplayer") {
             if isSpareOccupied(in: game!.moves, forIndex: position) { return }
-//            moves[position] = Move(player: .human, boardIndex: position)
             game!.moves[position] = Move(player: isPlayerOne(), boardIndex: position)
             game!.blockMoveForPlayerId = currentUser.id
             FirebaseService.shared.updateGame(game!)
@@ -75,18 +72,21 @@ final class PlayViewModel: ObservableObject {
         }
         // If AI can't take middle spare, take random spare
         playSound(sound: "click", type: "mp3")
-        if checkWinCondition(for: .human, in: game!.moves) {
-
-            if(mode == "multiplayer") {
+        if(mode == "multiplayer") {
+            if checkWinCondition(for: isPlayerOne(), in: game!.moves) {
                 game!.winningPlayerId = currentUser.id
                 print("you have won!")
                 FirebaseService.shared.updateGame(game!)
-            } else {
+                playSound(sound: "victory", type: "mp3")
+                return
+            }
+        } else {
+            if checkWinCondition(for: .human, in: game!.moves) {
                 alertItem = AlertContext.humanWin
                 currentPlayer.score += 200
+                playSound(sound: "victory", type: "mp3")
+                return
             }
-            playSound(sound: "victory", type: "mp3")
-            return
         }
         if (checkForDraw(in: game!.moves)) {
             if(mode == "multiplayer") {
@@ -199,9 +199,34 @@ final class PlayViewModel: ObservableObject {
         FirebaseService.shared.quitTheGame()
     }
     func resetGame() {
-        listPlayer[currentPlayer.name] = currentPlayer.score
-        UserDefaults.standard.set(listPlayer, forKey: "players")
-        game!.moves = Array(repeating: nil, count: 9)
+        if(mode == "multiplayer") {
+            guard game != nil else {
+                alertItem = AlertContext.quit
+                return
+            }
+            if game!.rematchPlayerId.count == 1 {
+                //start new game
+                game!.moves = Array(repeating: nil, count: 9)
+                game!.winningPlayerId = ""
+                game!.blockMoveForPlayerId = game!.player2Id
+
+            } else if game!.rematchPlayerId.count == 2 {
+                game!.rematchPlayerId = []
+            }
+
+            game!.rematchPlayerId.append(currentUser.id)
+
+            FirebaseService.shared.updateGame(game!)
+        } else {
+//            game = Game(id: "", player1Id: "", player2Id: "", blockMoveForPlayerId: ""    , winningPlayerId: "", rematchPlayerId: [], moves: Array(repeating: nil, count: 9))
+            listPlayer[currentPlayer.name] = currentPlayer.score
+            UserDefaults.standard.set(listPlayer, forKey: "players")
+            game!.moves = Array(repeating: nil, count: 9)
+        }
+
+    }
+    func resetGameObject() {
+        game = Game(id: "", player1Id: "", player2Id: "", blockMoveForPlayerId: "", winningPlayerId: "", rematchPlayerId: [], moves: Array(repeating: nil, count: 9))
     }
     //MARK: - User object
     func saveUser() {

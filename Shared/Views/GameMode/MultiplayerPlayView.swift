@@ -15,14 +15,13 @@ struct MultiplayerPlayView: View {
 
         GeometryReader { geometry in
             VStack {
-                
+                Text(viewModel.gameNotification)
                 Spacer()
                 LazyVGrid(columns: viewModel.columns) {
                     ForEach(0..<9) { i in
                         ZStack {
-
                             // if no move ko x on that
-                            GameSquareView(proxy: geometry)
+                            GameSquareView(isRed: false, proxy: geometry)
                             PlayerIndicator(systemImageName: viewModel.game?.moves[i]?.indicator ?? "")
                         }.onTapGesture {
                             viewModel.processPlayerMove(for: i)
@@ -30,15 +29,10 @@ struct MultiplayerPlayView: View {
                     }
                 }
                 Spacer()
-                Menu("Select mode: \(viewModel.mode)") {
-                    Button("Easy mode", action: easyMode)
-                    Button("Hard mode", action: hardMode)
-                    Button("Gacha mode", action: gachaMode)
-                }
+                Text("Select mode: \(viewModel.mode)")
                 Spacer()
-                Text(viewModel.gameNotification)
-                Text("Current Score: \(viewModel.currentPlayer.score)")
-                Text("Player Name: \(viewModel.currentPlayer.name)")
+
+                Text("Your ID: \(viewModel.currentUser.id)")
             }.padding()
                 .disabled(viewModel.checkForGameBoardStatus())
                 .alert(item: $viewModel.alertItem, content: { alertItem in
@@ -54,6 +48,7 @@ struct MultiplayerPlayView: View {
                         }))
             })
         }.onAppear {
+            viewModel.resetGameObject()
             viewModel.mode = "multiplayer"
             viewModel.getTheGame()
         }

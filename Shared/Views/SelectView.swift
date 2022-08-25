@@ -18,7 +18,10 @@ struct SelectView: View {
                     Text("Multiplayer").font(.title).foregroundColor(.white).padding().background(.blue).cornerRadius(20)
                 }
             }
-        }
+        }.onAppear(perform: {
+            playSound(sound: "selectview", type: "mp3")
+        })
+
     }
 }
 
