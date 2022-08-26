@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
-
+import Firebase
 
 struct MultiplayerPlayView: View {
+    init(){
+        // Use Firebase library to configure APIs
+        FirebaseApp.configure()
+    }
     @EnvironmentObject private var viewModel: PlayViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     var body: some View {
@@ -19,6 +23,7 @@ struct MultiplayerPlayView: View {
                 Spacer()
                 HStack {
                     Text("My turn").foregroundColor(viewModel.game?.blockMoveForPlayerId != viewModel.currentUser.id ? .red : .primary)
+                    Spacer()
                     Text("Other turn").foregroundColor(viewModel.game?.blockMoveForPlayerId == viewModel.currentUser.id ? .red : .primary)
                 }
                 LazyVGrid(columns: viewModel.columns) {
@@ -55,7 +60,16 @@ struct MultiplayerPlayView: View {
             viewModel.resetGameObject()
             viewModel.mode = "multiplayer"
             viewModel.getTheGame()
-        }
+        }.navigationBarBackButtonHidden(true)
+            .navigationBarItems(
+            leading:
+                Button(action: {
+                mode.wrappedValue.dismiss()
+                viewModel.quitGame()
+            }) {
+                Text("Back")
+            }
+        )
     }
     func easyMode() {
         viewModel.mode = "easy"

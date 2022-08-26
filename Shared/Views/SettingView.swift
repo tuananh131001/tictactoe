@@ -23,7 +23,7 @@ struct SettingView: View {
                 // Click button lets roll will play theme music
                 do {
                     try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-                    try AVAudioSession.sharedInstance().setActive(true)
+                    try AVAudioSession.sharedInstance().setActive(false)
                 } catch { print(error.localizedDescription) }
             
             }, label: {
