@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct MultiplayerPlayView: View {
-    init(){
+    init() {
         // Use Firebase library to configure APIs
         FirebaseApp.configure()
     }
@@ -22,9 +22,18 @@ struct MultiplayerPlayView: View {
                 Text(viewModel.gameNotification)
                 Spacer()
                 HStack {
-                    Text("My turn").foregroundColor(viewModel.game?.blockMoveForPlayerId != viewModel.currentUser.id ? .red : .primary)
+                    Text("My turn")
+                        .fontWeight(.bold)
+                        .foregroundColor(viewModel.game?.blockMoveForPlayerId != viewModel.currentUser.id ? .white : .primary)
+                        .padding(5)
+                        .background(viewModel.game?.blockMoveForPlayerId != viewModel.currentUser.id ? .red : Color(.systemBackground)).cornerRadius(20)
                     Spacer()
-                    Text("Other turn").foregroundColor(viewModel.game?.blockMoveForPlayerId == viewModel.currentUser.id ? .red : .primary)
+                    Text("Other turn")
+                        .fontWeight(.bold)
+                        .foregroundColor(viewModel.game?.blockMoveForPlayerId == viewModel.currentUser.id ? .white : .primary)
+                        .padding(5)
+                        .cornerRadius(20)
+                        .background(viewModel.game?.blockMoveForPlayerId == viewModel.currentUser.id ? .red : Color(.systemBackground)).cornerRadius(20)
                 }
                 LazyVGrid(columns: viewModel.columns) {
                     ForEach(0..<9) { i in

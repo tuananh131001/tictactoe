@@ -22,7 +22,8 @@ struct PlayView: View {
                             // if no move ko x on that
                             GameSquareView(isRed:true,proxy: geometry)
                             PlayerIndicator(systemImageName: viewModel.game?.moves[i]?.indicator ?? "")
-                        }.onTapGesture {
+                        }
+                        .onTapGesture {
                             viewModel.processPlayerMove(for: i)
                         }
                     }

@@ -11,7 +11,7 @@ import Combine
 
 final class PlayViewModel: ObservableObject {
 
-
+    @Published var hasMove: Bool = false
     let columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     // left to right 0 to 3
     @Published var mode = "multiplayer"
@@ -53,8 +53,7 @@ final class PlayViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     func processPlayerMove(for position: Int) {
-//        guard game != nil else { return }
-        print(game!)
+        guard game != nil else { return }
         var gachaMovePosition = Int.random(in: 0..<9)
         if (mode == "gacha") {
             while isSpareOccupied(in: game?.moves ?? Array(repeating: nil, count: 9), forIndex: gachaMovePosition) {
@@ -68,12 +67,9 @@ final class PlayViewModel: ObservableObject {
             if (game != nil)
             { FirebaseService.shared.updateGame(game!) }
         } else {
-            if isSpareOccupied(in: game?.moves ?? Array(repeating: nil, count: 9), forIndex: position) { return }
-            game?.moves[position] = Move(player: .human, boardIndex: position)
-//            if (game != nil)
-//            { FirebaseService.shared.updateGame(game!) }
+                if isSpareOccupied(in: game?.moves ?? Array(repeating: nil, count: 9), forIndex: position) { return }
+                game?.moves[position] = Move(player: .human, boardIndex: position)
         }
-        // If AI can't take middle spare, take random spare
         playSound(sound: "click", type: "mp3")
         if(mode == "multiplayer") {
             if checkWinCondition(for: isPlayerOne(), in: game?.moves ?? Array(repeating: nil, count: 9)) {
@@ -108,10 +104,12 @@ final class PlayViewModel: ObservableObject {
         }
         if (mode != "multiplayer") {
             isGameBoardDisabled = true
+
             // check for win or draw
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
                 let computerPosition = computerMoveLocation(in: game?.moves ?? Array(repeating: nil, count: 9))
                 game?.moves[computerPosition] = Move(player: .computer, boardIndex: computerPosition)
+
                 isGameBoardDisabled = false
                 if checkWinCondition(for: .computer, in: game?.moves ?? Array(repeating: nil, count: 9)) {
                     alertItem = AlertContext.computerWin
@@ -124,6 +122,7 @@ final class PlayViewModel: ObservableObject {
                     playSound(sound: "draw", type: "mp3")
                     return
                 }
+
             }
         }
 
@@ -233,8 +232,8 @@ final class PlayViewModel: ObservableObject {
 
     }
     func resetGameObject() {
-        if( game == nil){
-        game = Game(id: "", player1Id: "", player2Id: "", blockMoveForPlayerId: "", winningPlayerId: "", rematchPlayerId: [], moves: Array(repeating: nil, count: 9))
+        if(game == nil) {
+            game = Game(id: "", player1Id: "", player2Id: "", blockMoveForPlayerId: "", winningPlayerId: "", rematchPlayerId: [], moves: Array(repeating: nil, count: 9))
         }
 
     }
