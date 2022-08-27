@@ -9,12 +9,13 @@ import SwiftUI
 
 struct InitalView: View {
     @State var isWelcomeActive: Bool = true
+    @State var selectedTab = 1
       var body: some View {
           ZStack {
               if isWelcomeActive {
-                  GreetingView(active: $isWelcomeActive)
+                  GreetingView(active: $isWelcomeActive,selectedTab:$selectedTab)
               } else {
-                  AllTabView()
+                  AllTabView(selectedTab:$selectedTab)
               }
           }
       }

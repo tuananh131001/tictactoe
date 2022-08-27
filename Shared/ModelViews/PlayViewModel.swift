@@ -17,8 +17,9 @@ final class PlayViewModel: ObservableObject {
     @Published var mode = "multiplayer"
     @Published var isGameBoardDisabled = false
     @Published var alertItem: AlertItem?
-    @Published var currentPlayer: GamePlayerModel = UserDefaults.standard.object(forKey: "currentPlayer") as? GamePlayerModel ?? GamePlayerModel(id: UUID(), name: "sir", score: 1000)
+    @Published var currentPlayer: GamePlayerModel = UserDefaults.standard.object(forKey: "currentPlayer") as? GamePlayerModel ?? GamePlayerModel(id: UUID(), name: "Tom", score: 1000)
     @Published var listPlayer: [String: Int] = UserDefaults.standard.object(forKey: "players") as? [String: Int] ?? [:]
+    @AppStorage("gamesave") var gameSave: Data?
 
     //Online
     @Published var currentUser: User!
@@ -38,7 +39,8 @@ final class PlayViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
 
     init() {
-
+        listPlayer["Your Asian Neighbor"] = 1000000
+        listPlayer["Your Cousin"] = 999999
         if(mode == "multiplayer") {
             retriveUser()
             if currentUser == nil {
@@ -64,20 +66,18 @@ final class PlayViewModel: ObservableObject {
             if isSpareOccupied(in: game?.moves ?? Array(repeating: nil, count: 9), forIndex: position) { return }
             game?.moves[position] = Move(player: isPlayerOne(), boardIndex: position)
             game?.blockMoveForPlayerId = currentUser.id
-            if (game != nil)
-            { FirebaseService.shared.updateGame(game!) }
+            FirebaseService.shared.updateGame(game!)
         } else {
-                if isSpareOccupied(in: game?.moves ?? Array(repeating: nil, count: 9), forIndex: position) { return }
-                game?.moves[position] = Move(player: .human, boardIndex: position)
+            if isSpareOccupied(in: game?.moves ?? Array(repeating: nil, count: 9), forIndex: position) { return }
+            game?.moves[position] = Move(player: .human, boardIndex: position)
         }
         playSound(sound: "click", type: "mp3")
         if(mode == "multiplayer") {
             if checkWinCondition(for: isPlayerOne(), in: game?.moves ?? Array(repeating: nil, count: 9)) {
                 game?.winningPlayerId = currentUser.id
                 print("you have won!")
-                if (game != nil)
-                { game?.moves = Array(repeating: nil, count: 9)
-                    FirebaseService.shared.updateGame(game!) }
+                game?.moves = Array(repeating: nil, count: 9)
+                FirebaseService.shared.updateGame(game!)
                 playSound(sound: "victory", type: "mp3")
                 return
             }
@@ -93,12 +93,11 @@ final class PlayViewModel: ObservableObject {
             if(mode == "multiplayer") {
                 game?.winningPlayerId = "0"
                 print("Draw!")
-                if (game != nil)
-                { game?.moves = Array(repeating: nil, count: 9)
-                    FirebaseService.shared.updateGame(game!) }
+                game?.moves = Array(repeating: nil, count: 9)
+                FirebaseService.shared.updateGame(game!)
             } else {
                 alertItem = AlertContext.draw
-                playSound(sound: "draw", type: "mp3")
+                playSound(sound: "drawn", type: "mp3")
             }
             return
         }
@@ -119,12 +118,14 @@ final class PlayViewModel: ObservableObject {
                 }
                 if checkForDraw(in: game?.moves ?? Array(repeating: nil, count: 9)) {
                     alertItem = AlertContext.draw
-                    playSound(sound: "draw", type: "mp3")
+                    playSound(sound: "drawn", type: "mp3")
                     return
                 }
-
+                // Only in singleplayer , autosave, after computer go the game will be save
+                saveGame()
             }
         }
+
 
     }
     // Check already exist
@@ -228,6 +229,7 @@ final class PlayViewModel: ObservableObject {
             listPlayer[currentPlayer.name] = currentPlayer.score
             UserDefaults.standard.set(listPlayer, forKey: "players")
             game!.moves = Array(repeating: nil, count: 9)
+            gameSave = nil
         }
 
     }
@@ -235,9 +237,29 @@ final class PlayViewModel: ObservableObject {
         if(game == nil) {
             game = Game(id: "", player1Id: "", player2Id: "", blockMoveForPlayerId: "", winningPlayerId: "", rematchPlayerId: [], moves: Array(repeating: nil, count: 9))
         }
+    }
+    func checkAchievement(score: Int) {
 
     }
     //MARK: - User object
+    func saveGame() {
+        do {
+            print("encoding user object")
+            let data = try JSONEncoder().encode(game)
+            gameSave = data
+        } catch {
+            print("couldnt same user object")
+        }
+    }
+    func retriveGameSave() {
+        guard let gameSave = gameSave else { return }
+        do {
+            print("decoding user")
+            game = try JSONDecoder().decode(Game.self, from: gameSave)
+        } catch {
+            print("no game saved")
+        }
+    }
     func saveUser() {
         currentUser = User()
         do {
@@ -275,13 +297,15 @@ final class PlayViewModel: ObservableObject {
 
         if game!.winningPlayerId == "0" {
             alertItem = AlertContext.draw
-
+            playSound(sound: "drawn", type: "mp3")
         } else if game!.winningPlayerId != "" {
 
             if game!.winningPlayerId == currentUser.id {
                 alertItem = AlertContext.humanWin
+                playSound(sound: "win", type: "mp3")
             } else {
                 alertItem = AlertContext.computerWin
+                playSound(sound: "lose", type: "mp3")
             }
         }
     }

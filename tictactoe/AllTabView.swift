@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AllTabView: View {
-    @State var selectedTab = 1
+    @Binding var selectedTab:Int
     var body: some View {
         TabView(selection: $selectedTab) {
             TutorialView(tabSelection: $selectedTab)
@@ -46,6 +46,6 @@ struct AllTabView: View {
 }
 struct AllTabView_Previews: PreviewProvider {
     static var previews: some View {
-        AllTabView()
+        AllTabView(selectedTab: .constant(1))
     }
 }

@@ -12,10 +12,10 @@ struct SelectView: View {
         NavigationView {
             VStack {
                 NavigationLink(destination: PlayView()) {
-                    Text("SinglePlayer").font(.title).foregroundColor(.white).padding().background(.blue).cornerRadius(20)
+                    Text("SinglePlayer 🙎🏿‍♂️").font(.title).foregroundColor(.white).padding().background(.blue).cornerRadius(20)
                 }
                 NavigationLink(destination: MultiplayerPlayView()) {
-                    Text("Multiplayer").font(.title).foregroundColor(.white).padding().background(.blue).cornerRadius(20)
+                    Text("Multiplayer 🙍🏻‍♀️ 💁‍♂️").font(.title).foregroundColor(.white).padding().background(.blue).cornerRadius(20)
                 }
             }
         }.onAppear(perform: {

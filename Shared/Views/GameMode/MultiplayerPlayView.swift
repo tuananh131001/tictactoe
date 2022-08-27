@@ -49,7 +49,7 @@ struct MultiplayerPlayView: View {
                 Spacer()
                 Text("Select mode: \(viewModel.mode)")
                 Spacer()
-
+                Text("Room ID: \(viewModel.game?.id ?? "") ")
                 Text("Your ID: \(viewModel.currentUser.id)")
             }.padding()
                 .disabled(viewModel.checkForGameBoardStatus())
