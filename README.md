@@ -82,7 +82,7 @@ There are background music for every view. There is a sound effect when tap when
 - Target Deployment iOS >=15.3
 - Library: Firebase,AVFoundation,Combine
 ## Futher Improvement
-- Anti cheating system 
+- Anti cheating system (players can use multiple finger to win)
 - Avatar for users 
 - Leaderboard works in multiplayer
 ## 👑 Author
