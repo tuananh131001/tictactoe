@@ -26,6 +26,18 @@ Some winning examples:
 - You should make a move in the middle.  
 - For defence , you should make moves in every corner if the other make a move in middle.  
 - You will win if other makes mistake and conversely.  
+## 💎 Main Features
+###	- Greeting View (Menu view):
+From this view, users can navigate these below views: Game view,Leaderboard button. , How to play view and Leaderboard view:
+###	- List of high scores (or past scores)
+The view display that all users have played with their score and achievement badges they got.
+###	- Game view:
+The view where users can play with your game..There is the current score/status of the game. User can take some actions to progress the game.There is some animations with “xmark” and “omark”.The is a status of the turn of the player.
+###	- How to play view:
+Show user rules/how to play this game.
+###	- Effect sounds:
+There are background music for every view. There is a sound effect when tap when play game and achieve the badges. Also, there is sound effect when lose, win and drawn.
+### - The game works well on iPhone 11 upper.
 
 ## ⚙️ Extra Features 
  1. Welcome screen 
