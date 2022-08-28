@@ -40,14 +40,13 @@ There are background music for every view. There is a sound effect when tap when
 ### - The game works well on iPhone 11 upper.
 
 ## ⚙️ Extra Features 
- 1. Welcome screen 
- 2. Music 
- 3. Filter Maps
- 4. Origin Map using MapKit based on real location from VALVE
- 5. Zoomable Callouts 
- 6. Search
- 7. GIF image in welcome screen
- 8. Tab View
+ ### 1. Resume match
+ ### 2. Changing name 
+ ### 3. Achievement badges 
+ ### 4. Difficulty system
+ ### 5. AI game agent
+ ### 6. Dark mode
+ ### 7. Multiplayer
  
  ## 📷 Screenshot
 <img src="https://user-images.githubusercontent.com/67695658/182521502-094600d8-2314-49f5-81c2-2ef5433ae4ca.png" width="238" ><img src="https://user-images.githubusercontent.com/67695658/182521202-f7e34735-5cf1-46df-b7d1-16a0a6a60824.png" width="238" >
