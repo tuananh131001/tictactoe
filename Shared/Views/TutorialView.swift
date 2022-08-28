@@ -45,7 +45,7 @@ struct TutorialView: View {
                     self.tabSelection = 2
                 }, label: {
                         Capsule()
-                            .fill(Color.white.opacity(0.2))
+                            .fill(Color.red.opacity(0.2))
                             .padding(8)
                             .frame(height: 80)
                             .overlay(Text("Let's start")

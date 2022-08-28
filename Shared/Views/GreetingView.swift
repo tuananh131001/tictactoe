@@ -27,9 +27,8 @@ struct GreetingView: View {
                     .fontWeight(.heavy)
                     .foregroundColor(.orange)
                 Text("""
-                        "Do stupid stuff,
-                        But do it with confidence"
-                        - Robin "Flusha" Ronnquist
+                        "Just a simple Tic Tac Toe game"
+                        - William
                         """)
                     .font(.subheadline)
                     .fontWeight(.light)
@@ -49,7 +48,7 @@ struct GreetingView: View {
                 selectedTab = 1
             }, label: {
                     Capsule()
-                        .fill(Color.white.opacity(0.2))
+                        .fill(Color.red.opacity(0.2))
                         .padding(8)
                         .frame(height: 80)
                         .overlay(Text("How to play")
@@ -63,7 +62,7 @@ struct GreetingView: View {
                 selectedTab = 2
             }, label: {
                     Capsule()
-                        .fill(Color.white.opacity(0.2))
+                        .fill(Color.red.opacity(0.2))
                         .padding(8)
                         .frame(height: 80)
                         .overlay(Text("Play Game")
@@ -77,7 +76,7 @@ struct GreetingView: View {
                 selectedTab = 3
             }, label: {
                     Capsule()
-                        .fill(Color.white.opacity(0.2))
+                        .fill(Color.red.opacity(0.2))
                         .padding(8)
                         .frame(height: 80)
                         .overlay(Text("Leaderboard")
