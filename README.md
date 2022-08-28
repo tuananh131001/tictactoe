@@ -73,7 +73,13 @@ There are background music for every view. There is a sound effect when tap when
   <tr>
     <td><img src="https://user-images.githubusercontent.com/67695658/187083648-e71f4b38-b182-4942-8325-24c282c2a9c2.gif" width="280"></td>
    </tr>
-
+  <tr>
+    <td>Multiplayer</td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/67695658/187084248-004c0799-4365-4f08-a6ee-f41170b83d34.gif" width="280"></td>
+    <td><img src="https://user-images.githubusercontent.com/67695658/187084249-b0758f82-079b-471a-b12b-3a37bdd94482.gif" width="280"></td>
+   </tr>
  </table>
 
 ## 🔧 Build Information
