@@ -81,6 +81,7 @@ There are background music for every view. There is a sound effect when tap when
 - SwiftUI Framework
 - Target Deployment iOS >=15.3
 - Library: Firebase,AVFoundation,Combine
+- Note for build : Just download,open the .xcodeproj , wait until it finish downloading firebase.Choose Iphone 11 for simulation.
 ## Futher Improvement
 - Anti cheating system (players can use multiple finger to win)
 - Avatar for users 
