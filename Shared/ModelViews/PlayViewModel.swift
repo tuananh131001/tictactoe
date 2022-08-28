@@ -57,6 +57,8 @@ final class PlayViewModel: ObservableObject {
     func processPlayerMove(for position: Int) {
         guard game != nil else { return }
         var gachaMovePosition = Int.random(in: 0..<9)
+        
+        // Player move
         if (mode == "gacha") {
             while isSpareOccupied(in: game?.moves ?? Array(repeating: nil, count: 9), forIndex: gachaMovePosition) {
                 gachaMovePosition = Int.random(in: 0..<9)
@@ -72,6 +74,8 @@ final class PlayViewModel: ObservableObject {
             game?.moves[position] = Move(player: .human, boardIndex: position)
         }
         playSound(sound: "click", type: "mp3")
+        
+        // Check Winning Condition
         if(mode == "multiplayer") {
             if checkWinCondition(for: isPlayerOne(), in: game?.moves ?? Array(repeating: nil, count: 9)) {
                 game?.winningPlayerId = currentUser.id
@@ -101,6 +105,8 @@ final class PlayViewModel: ObservableObject {
             }
             return
         }
+        
+        // AI Winning condition part
         if (mode != "multiplayer") {
             isGameBoardDisabled = true
 

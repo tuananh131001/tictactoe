@@ -10,12 +10,12 @@ import SwiftUI
 struct GreetingView: View {
     @Binding var active: Bool
     @Binding var selectedTab: Int
+    @EnvironmentObject private var viewModel: PlayViewModel
     
-    @EnvironmentObject private var viewModel:PlayViewModel
     var body: some View {
-
         VStack(spacing: 20) {
             Spacer()
+            // Title
             VStack(spacing: 0) {
                 Text("Tic Tae Toe")
                     .font(.system(size: 60))
@@ -31,8 +31,9 @@ struct GreetingView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 10)
             }
+            // Name Setting
             HStack {
-                Text("Name:")
+                Text("Name(default: Tom):")
                 TextField("Type your name", text: $viewModel.currentPlayer.name).padding(.horizontal).frame(height: 60).cornerRadius(50)
             }.padding()
             Spacer()
@@ -79,12 +80,12 @@ struct GreetingView: View {
                             .fontWeight(.bold))
                 })
         }
-            
+
     }
 }
 
 struct GreetingView_Previews: PreviewProvider {
     static var previews: some View {
-        GreetingView(active: .constant(true),selectedTab: .constant(1))
+        GreetingView(active: .constant(true), selectedTab: .constant(1))
     }
 }

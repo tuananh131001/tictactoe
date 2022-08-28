@@ -17,10 +17,12 @@ struct SelectView: View {
                 NavigationLink(destination: MultiplayerPlayView()) {
                     Text("Multiplayer 🙍🏻‍♀️ 💁‍♂️").font(.title).foregroundColor(.white).padding().background(.blue).cornerRadius(20)
                 }
-            }
+            }.background(Image("selectviewbg"))
         }.onAppear(perform: {
             playSound(sound: "selectview", type: "mp3")
+            
         })
+        
 
     }
 }
