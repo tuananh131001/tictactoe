@@ -9,9 +9,9 @@ A Single Player and Multiplayer Tic-tae-toe game.
 
 <p align="center">" Just Simple "</p>
 
-## Introduction
+## 🎉Introduction
 Tic-tac-toe (American English), noughts and crosses (Commonwealth English), or Xs and Os (Irish English) is a paper-and-pencil game for two players who take turns marking the spaces in a three-by-three grid with X or O. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner. It is a solved game, with a forced draw assuming best play from both players. [1]
-## Motivation
+## 💡Motivation
 When I was studied in elementary , my childhood is stick with tic-tac-toe .A game that you can play everywhere just with a pen and a piece of paper,you can compete with your friends and have a great momemnt when winning.You don't have to teach the other because the game is very easy to play.So this time I make it on the phone with multiplayer mode so you can play with your friend even from very far distance or if you dont have friend you can also play with an AI with different mode to experience.
 ## 📖 Rules and Tips
 The goal of the game is to connect number symbols indicated on the below figure.   
@@ -41,21 +41,28 @@ There are background music for every view. There is a sound effect when tap when
 
 ## ⚙️ Extra Features 
  ### 1. Resume match
+ By implement auto save , when user make any move , the game will automatically save .When player open the app , the game will ask if he/she want to continue, if yes the game will load the last game and continue to play.
  ### 2. Changing name 
+ Player can change name in greeting view or in setting view. The leaderboard will show different names for each score
  ### 3. Achievement badges 
+ When player score is 1400 , 3000,4000,100000,10000000 ,they will get badge and message announce getting the badge.
  ### 4. Difficulty system
+ There are 3 mode when player plays with AI : Gacha,Easy,Hard. 
+ In the gacha mode, player and AI will make random moves.In Easy mode, AI will make random moves .And in the last mode, player will play with a smart AI .
  ### 5. AI game agent
+  In Easy mode, AI will make random moves .And in the last mode, player will play with a smart AI . IN the hard mode, the AI will check a set of winning moves , if the player move is in a set of winning move ,the AI will move the next win moves so that players cannot complete their winning move.
  ### 6. Dark mode
+ The application uses neutral colors so the program can works well in both light mode and dark mode.
  ### 7. Multiplayer
+ In the multiplayer mode, the user create a room and wait for other player. When other player gets in ,they will start the game in real time playing .
  
  ## 📷 Screenshot
-<img src="https://user-images.githubusercontent.com/67695658/182521502-094600d8-2314-49f5-81c2-2ef5433ae4ca.png" width="238" ><img src="https://user-images.githubusercontent.com/67695658/182521202-f7e34735-5cf1-46df-b7d1-16a0a6a60824.png" width="238" >
 
-<img src="https://user-images.githubusercontent.com/67695658/182521205-67321d75-4599-4ede-80d8-73b61db57835.png" width="238" ><img src="https://user-images.githubusercontent.com/67695658/182521211-2024acc9-62ee-406f-a576-f0195da59f3c.png" width="238" >
+<img src="https://user-images.githubusercontent.com/67695658/187081626-d9666181-ebbb-403b-ac4c-7ff1f48f21e1.png" width="238" ><img src="https://user-images.githubusercontent.com/67695658/187081672-180d3330-0aa7-4716-a394-a0c4d31439fd.png" width="238" >  
+<img src="https://user-images.githubusercontent.com/67695658/187082466-f6f258f4-5b15-469d-8136-7f9df5c8707e.png" width="238" ><img src="https://user-images.githubusercontent.com/67695658/187082470-e08c5253-499e-40d6-94a1-fbebeb72d6c6.png" width="238" >  
+<img src="https://user-images.githubusercontent.com/67695658/187082474-24d329fd-a3ff-41ac-a95a-bee9b9765ab8.png" width="238" ><img src="https://user-images.githubusercontent.com/67695658/187082476-ecd3a92d-c0df-4bea-8b34-38c74941b5e6.png" width="238" >  
+<img src="https://user-images.githubusercontent.com/67695658/187082479-4bad5d49-caeb-4a41-9f95-f60733a0538f.png" width="238" >
 
-<img src="https://user-images.githubusercontent.com/67695658/182521216-8860bd02-1988-4a09-8fb8-0a7979cc5ff2.png" width="238" ><img src="https://user-images.githubusercontent.com/67695658/182521219-877ca2e3-7a33-4f78-9d76-a0f27d072b26.png" width="238" >
-
-Note: there are map that do not have any information about origin country due to its communitity map and usualy dont have much players so map will get default settings for country and ratio winning
 
 ## 🔮 Live Demo (Animation GIF)
 
