@@ -71,7 +71,7 @@ There are background music for every view. There is a sound effect when tap when
     <td>Full Version</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/tuananh131001/CSGO-Maps/blob/main/assignment%201/csgogif.gif" width="280"></td>
+    <td><img src="https://user-images.githubusercontent.com/67695658/187083648-e71f4b38-b182-4942-8325-24c282c2a9c2.gif" width="280"></td>
    </tr>
 
  </table>
