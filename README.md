@@ -7,7 +7,7 @@ A Single Player and Multiplayer Tic-tae-toe game.
 
 </p>
 
-<p align="center">" Just Simple "</p>
+<p align="center">" Just a simple tic-tac-toe game "</p>
 
 ## 🎉Introduction
 Tic-tac-toe (American English), noughts and crosses (Commonwealth English), or Xs and Os (Irish English) is a paper-and-pencil game for two players who take turns marking the spaces in a three-by-three grid with X or O. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner. It is a solved game, with a forced draw assuming best play from both players. [1]
@@ -80,10 +80,11 @@ There are background music for every view. There is a sound effect when tap when
 - Xcode 13.4.1
 - SwiftUI Framework
 - Target Deployment iOS >=15.3
-- Library: CoreLocation for the MapKit
-           AVAudioPlayer
-           WebKit
-
+- Library: Firebase,AVFoundation,Combine
+## Futher Improvement
+- Only handle single tap
+- Avatar for users 
+- Leaderboard works in multiplayer
 ## 👑 Author
 - Nguyen Tuan Anh - s3864077@rmit.edu.vn
 
