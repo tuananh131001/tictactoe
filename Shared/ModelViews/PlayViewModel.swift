@@ -1,10 +1,15 @@
-//
-//  PlayViewModel.swift
-//  tictactoe
-//
-//  Created by William on 13/08/2022.
-//
-
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen Tuan Anh
+  ID: s3864077
+  Created  date: 26/08/2022
+  Last modified: 28/08/2022
+  Acknowledgement:https://www.youtube.com/watch?v=jKbsWw9yAnI, https://www.youtube.com/watch?v=MCLiPW2ns2w&t=2274s, hackingwithswift
+ 
+*/
 import Foundation
 import SwiftUI
 import Combine
@@ -39,6 +44,7 @@ final class PlayViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
 
     init() {
+        // Create some player on leaderboard
         listPlayer["Your Asian Neighbor"] = 1000000
         listPlayer["Your Cousin"] = 999999
         if(mode == "multiplayer") {
@@ -48,12 +54,14 @@ final class PlayViewModel: ObservableObject {
             }
         }
     }
+    // Create a multiplayer match
     func getTheGame() {
         FirebaseService.shared.startGame(with: currentUser.id)
         FirebaseService.shared.$game
             .assign(to: \.game, on: self)
             .store(in: &cancellables)
     }
+    // When the player tap to make a move , this func will trigger
     func processPlayerMove(for position: Int) {
         guard game != nil else { return }
         var gachaMovePosition = Int.random(in: 0..<9)
@@ -93,6 +101,7 @@ final class PlayViewModel: ObservableObject {
                 return
             }
         }
+        // Check drawn condition
         if (checkForDraw(in: game?.moves ?? Array(repeating: nil, count: 9))) {
             if(mode == "multiplayer") {
                 game?.winningPlayerId = "0"
@@ -191,6 +200,8 @@ final class PlayViewModel: ObservableObject {
         return false
     }
     //MARK - END AI SECTION
+    
+    // Game notification in multiplayer mode
     func updateGameNotificationFor(_ state: GameState) {
         switch state {
         case .started:
@@ -201,6 +212,7 @@ final class PlayViewModel: ObservableObject {
             gameNotification = GameNotification.gameFinished
         }
     }
+    // check which turn of who in multiplayer
     func checkForGameBoardStatus() -> Bool {
         return game != nil ? game!.blockMoveForPlayerId == currentUser.id: false
     }
@@ -231,7 +243,7 @@ final class PlayViewModel: ObservableObject {
 
             FirebaseService.shared.updateGame(game!)
         } else {
-//            game = Game(id: "", player1Id: "", player2Id: "", blockMoveForPlayerId: ""    , winningPlayerId: "", rematchPlayerId: [], moves: Array(repeating: nil, count: 9))
+            // update score in leaderboard and reset game in singleplayer mode
             listPlayer[currentPlayer.name] = currentPlayer.score
             UserDefaults.standard.set(listPlayer, forKey: "players")
             game!.moves = Array(repeating: nil, count: 9)
@@ -239,15 +251,13 @@ final class PlayViewModel: ObservableObject {
         }
 
     }
+    // Function for reset game
     func resetGameObject() {
         if(game == nil) {
             game = Game(id: "", player1Id: "", player2Id: "", blockMoveForPlayerId: "", winningPlayerId: "", rematchPlayerId: [], moves: Array(repeating: nil, count: 9))
         }
     }
-    func checkAchievement(score: Int) {
-
-    }
-    //MARK: - User object
+    //MARK: - User object in multiplayer mode
     func saveGame() {
         do {
             print("encoding user object")
@@ -296,6 +306,7 @@ final class PlayViewModel: ObservableObject {
         }
 
     }
+
     func checkIfGameIsOver() {
         alertItem = nil
 

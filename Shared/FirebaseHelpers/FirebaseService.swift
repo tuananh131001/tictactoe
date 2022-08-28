@@ -8,7 +8,9 @@
   Created  date:20/08/2022
   Last modified: 28/08/2022
   Acknowledgement:https://www.youtube.com/watch?v=jKbsWw9yAnI
-*/
+  There is some warning here due to FirebaseFirestoreSwifthttps://stackoverflow.com/questions/62270746/cannot-convert-value-of-type-x-to-expected-argument-type-string-any
+  Go to other view it will gone , the build will works without any error, game still play with no error
+ */
 
 import Foundation
 import Firebase

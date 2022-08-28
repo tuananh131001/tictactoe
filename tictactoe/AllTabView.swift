@@ -1,12 +1,19 @@
-//
-//  ContentView.swift
-//  tictactoe
-//
-//  Created by William on 12/08/2022.
-//
+/*
+  RMIT University Vietnam
+  Course: COSC2659 iOS Development
+  Semester: 2022B
+  Assessment: Assignment 2
+  Author: Nguyen Tuan Anh
+  ID: s3864077
+  Created  date: 26/08/2022
+  Last modified: 28/08/2022
+  Acknowledgement:
+*/
 
 import SwiftUI
 
+
+// Tab View of all view with ablity to track tab item
 struct AllTabView: View {
     @Binding var selectedTab:Int
     var body: some View {
@@ -39,8 +46,6 @@ struct AllTabView: View {
                     Text("Settings")
                 }
             }.tag(4)
-        }.onChange(of: selectedTab) { newValue in
-//            playSound(sound: "press", type: "mp3")
         }
     }
 }
